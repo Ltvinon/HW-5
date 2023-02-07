@@ -1,4 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
+using System.Text.RegularExpressions;
+using System.Text;
 
 public class Benchmarks
 {
@@ -8,15 +10,17 @@ public class Benchmarks
     {
         MyRegex.CompiledRegex(text);
     }
+
     [Benchmark]
     public void NotCompiled()
     {
         MyRegex.DefaultRegex(text);
     }
+
     [Benchmark]
     public void GenRegex()
     {
-
+        MyRegex.GeneratedRegex(text);
     }
 
 }
