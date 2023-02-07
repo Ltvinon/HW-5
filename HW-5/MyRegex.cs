@@ -1,15 +1,21 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-public class MyRegex
+public partial class MyRegex
 {
-     static public void DefaultRegex(string text)
+    const string Pattern = @"\b(\w+)\b\s+(\b\1\b)";
+
+    [GeneratedRegex(@"\b(\w+)\b\s+(\b\1\b)", RegexOptions.IgnoreCase)]
+    static private partial Regex GenRegex();
+
+    static private  Regex DefRegex = new Regex(Pattern, RegexOptions.IgnoreCase);
+
+    static private Regex ComRegex = new Regex(Pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    static public void DefaultRegex(string text)
     {
-        string pattern = @"\b(\w+)\b\s+(\b\1\b)";
 
-        Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
-
-        string result = regex.Replace(text, "$1");
+        string result = DefRegex.Replace(text, "$1");
 
         Console.OutputEncoding = Encoding.UTF8;
         Console.WriteLine(result);
@@ -18,28 +24,23 @@ public class MyRegex
 
    static  public void CompiledRegex(string text)
     {
-        string pattern = @"\b(\w+)\b\s+(\b\1\b)";
 
-        Regex regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-        string result = regex.Replace(text, "$1");
+        string result = ComRegex.Replace(text, "$1");
 
         Console.OutputEncoding = Encoding.UTF8;
         Console.WriteLine(result);
 
     }
-    
-    static public void GenRegex(string text)
+    static public void GeneratedRegex(string text)
     {
-        string pattern = @"\b(\w+)\b\s+(\b\1\b)";
 
-        Regex regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-        string result = regex.Replace(text, "$1");
+        string result = GenRegex().Replace(text, "$1");
 
         Console.OutputEncoding = Encoding.UTF8;
         Console.WriteLine(result);
 
     }
+
 }
+
 
